@@ -7,7 +7,7 @@ version: '3.5'
 
 services:
   traefik:
-    image: traefik:2.2.6
+    image: traefik:2.3.2
     container_name: traefik
     restart: unless-stopped
     command:
@@ -23,48 +23,46 @@ services:
       - --certificatesresolvers.le.acme.storage=/opt/traefik/acme.json
       - --certificatesresolvers.le.acme.httpChallenge=true
       - --certificatesresolvers.le.acme.httpChallenge.entryPoint=web
-      # - --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory # descoment for staging
+      - --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory # descoment for staging
     ports:
       - "80:80"
       - "443:443"
-      # - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /odoo_ar/traefik/:/opt/traefik/
 
   postgres:
-    image: postgres:9.5
+    image: postgres:10.1-alpine
     container_name: postgres
     restart: always
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
     volumes:
-      - /odoo_ar/odoo-8.0/makeover/postgresql:/var/lib/postgresql/data
+      - postgresql:/var/lib/postgresql/data
 
   odoo:
-    image: jobiols/odoo-jeo:8.0
+    image: jobiols/odoo-jeo:14.0
     container_name: odoo
     restart: unless-stopped
     volumes:
-      - /odoo_ar/odoo-8.0/makeover/config:/opt/odoo/etc/
-      - /odoo_ar/odoo-8.0/makeover/data_dir:/opt/odoo/data
-      - /odoo_ar/odoo-8.0/makeover/log:/var/log/odoo
-      - /odoo_ar/odoo-8.0/makeover/sources:/opt/odoo/custom-addons
-      - /odoo_ar/odoo-8.0/makeover/backup_dir:/var/odoo/backups/
+      - /odoo_ar/odoo-14.0/tecnopro/config:/opt/odoo/etc/
+      - data_dir:/opt/odoo/data
+      - /odoo_ar/odoo-14.0/tecnopro/log:/var/log/odoo
+      - /odoo_ar/odoo-14.0/tecnopro/sources:/opt/odoo/custom-addons
+      - /odoo_ar/odoo-14.0/tecnopro/backup_dir:/var/odoo/backups/
     links:
       - postgres:db
-      - aeroo:aeroo
     environment:
       - SERVER_MODE= 
     labels:
       # router rou-odoo --> Acceso a odoo en puerto 80
-      - traefik.http.routers.rou-odoo.rule=Host(`odoo.makeoverlab.com.ar`)
+      - traefik.http.routers.rou-odoo.rule=Host(`tecnopro.com.py`)
       - traefik.http.routers.rou-odoo.entrypoints=web
       - traefik.http.routers.rou-odoo.service=srv-odoo-secure
 
       # router rou-chat --> Acceso a /longpolling en puerto 80
-      - traefik.http.routers.rou-chat.rule=Host(`odoo.makeoverlab.com.ar`) && PathPrefix(`/longpolling`)
+      - traefik.http.routers.rou-chat.rule=Host(`tecnopro.com.py`) && PathPrefix(`/longpolling`)
       - traefik.http.routers.rou-chat.entrypoints=web
       - traefik.http.routers.rou-chat.service=srv-chat-secure
 
@@ -80,7 +78,7 @@ services:
       - traefik.http.routers.rou-chat.middlewares=redirect-to-https@docker
 
       # router rou-odoo-secure --> Acceso a odoo en puerto 443
-      - traefik.http.routers.rou-odoo-secure.rule=Host(`odoo.makeoverlab.com.ar`)
+      - traefik.http.routers.rou-odoo-secure.rule=Host(`tecnopro.com.py`)
       - traefik.http.routers.rou-odoo-secure.tls=true
       - traefik.http.routers.rou-odoo-secure.tls.certresolver=le
       - traefik.http.routers.rou-odoo-secure.entrypoints=websecure
@@ -90,7 +88,7 @@ services:
       - traefik.http.services.srv-odoo-secure.loadbalancer.server.port=8069
 
       # Router rou-chat-secure --> Acceso a odoo en puerto 443
-      - traefik.http.routers.rou-chat-secure.rule=(Host(`odoo.makeoverlab.com.ar`)) && PathPrefix(`/longpolling`)
+      - traefik.http.routers.rou-chat-secure.rule=(Host(`tecnopro.com.py`)) && PathPrefix(`/longpolling`)
       - traefik.http.routers.rou-chat-secure.tls=true
       - traefik.http.routers.rou-chat-secure.tls.certresolver=le
       - traefik.http.routers.rou-chat-secure.entrypoints=websecure
@@ -99,6 +97,6 @@ services:
       - traefik.http.routers.rou-chat-secure.service=srv-chat-secure
       - traefik.http.services.srv-chat-secure.loadbalancer.server.port=8072
 
-  aeroo:
-    image: jobiols/aeroo-docs
-    container_name: aeroo
+volumes: 
+  - postgresql
+  - data_dir

@@ -26,7 +26,7 @@
     'author': "jeo Software",
     'website': 'http://github.com/jobiols/module-repo',
     'license': 'AGPL-3',
-    'depends': [ ],
+    'depends': ['website_sale'],
     'installable': True,
 
     # manifest version, if omitted it is backward compatible
