@@ -23,7 +23,7 @@ services:
       - --certificatesresolvers.le.acme.storage=/opt/traefik/acme.json
       - --certificatesresolvers.le.acme.httpChallenge=true
       - --certificatesresolvers.le.acme.httpChallenge.entryPoint=web
-      - --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory # descoment for staging
+      #- --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory # descoment for staging
     ports:
       - "80:80"
       - "443:443"
