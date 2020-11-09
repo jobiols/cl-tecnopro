@@ -98,5 +98,5 @@ services:
       - traefik.http.services.srv-chat-secure.loadbalancer.server.port=8072
 
 volumes:
-  - postgresql
-  - data_dir
+  postgresql:
+  data_dir:
