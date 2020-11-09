@@ -54,15 +54,15 @@ services:
     links:
       - postgres:db
     environment:
-      - SERVER_MODE= 
+      - SERVER_MODE=
     labels:
       # router rou-odoo --> Acceso a odoo en puerto 80
-      - traefik.http.routers.rou-odoo.rule=Host(`tecnopro.com.py`)
+      - traefik.http.routers.rou-odoo.rule=Host(`v2.tecnopro.com.py`)
       - traefik.http.routers.rou-odoo.entrypoints=web
       - traefik.http.routers.rou-odoo.service=srv-odoo-secure
 
       # router rou-chat --> Acceso a /longpolling en puerto 80
-      - traefik.http.routers.rou-chat.rule=Host(`tecnopro.com.py`) && PathPrefix(`/longpolling`)
+      - traefik.http.routers.rou-chat.rule=Host(`v2.tecnopro.com.py`) && PathPrefix(`/longpolling`)
       - traefik.http.routers.rou-chat.entrypoints=web
       - traefik.http.routers.rou-chat.service=srv-chat-secure
 
@@ -73,22 +73,22 @@ services:
       - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
       - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
 
-      # Asigno los middlewares de redireccion a los routers  
+      # Asigno los middlewares de redireccion a los routers
       - traefik.http.routers.rou-odoo.middlewares=redirect-to-https@docker
       - traefik.http.routers.rou-chat.middlewares=redirect-to-https@docker
 
       # router rou-odoo-secure --> Acceso a odoo en puerto 443
-      - traefik.http.routers.rou-odoo-secure.rule=Host(`tecnopro.com.py`)
+      - traefik.http.routers.rou-odoo-secure.rule=Host(`v2.tecnopro.com.py`)
       - traefik.http.routers.rou-odoo-secure.tls=true
       - traefik.http.routers.rou-odoo-secure.tls.certresolver=le
       - traefik.http.routers.rou-odoo-secure.entrypoints=websecure
-      
+
       # Redirecciona rou-odoo-secure al puert 8069 donde escucha odoo
       - traefik.http.routers.rou-odoo-secure.service=srv-odoo-secure
       - traefik.http.services.srv-odoo-secure.loadbalancer.server.port=8069
 
       # Router rou-chat-secure --> Acceso a odoo en puerto 443
-      - traefik.http.routers.rou-chat-secure.rule=(Host(`tecnopro.com.py`)) && PathPrefix(`/longpolling`)
+      - traefik.http.routers.rou-chat-secure.rule=(Host(`v2.tecnopro.com.py`)) && PathPrefix(`/longpolling`)
       - traefik.http.routers.rou-chat-secure.tls=true
       - traefik.http.routers.rou-chat-secure.tls.certresolver=le
       - traefik.http.routers.rou-chat-secure.entrypoints=websecure
@@ -97,6 +97,6 @@ services:
       - traefik.http.routers.rou-chat-secure.service=srv-chat-secure
       - traefik.http.services.srv-chat-secure.loadbalancer.server.port=8072
 
-volumes: 
+volumes:
   - postgresql
   - data_dir
