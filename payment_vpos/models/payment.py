@@ -25,18 +25,54 @@ _logger = logging.getLogger(__name__)
 class PaymentAcquirerOgone(models.Model):
     _inherit = 'payment.acquirer'
 
-    provider = fields.Selection(selection_add=[
-        ('vpos', 'vPOS')
-    ], ondelete={'vpos': 'set default'})
-    ogone_pspid = fields.Char('PSPID', required_if_provider='vpos', groups='base.group_user')
-    ogone_userid = fields.Char('API User ID', required_if_provider='vpos', groups='base.group_user')
-    ogone_password = fields.Char('API User Password', required_if_provider='vpos', groups='base.group_user')
-    ogone_shakey_in = fields.Char('SHA Key IN', size=32, required_if_provider='vpos', groups='base.group_user')
-    ogone_shakey_out = fields.Char('SHA Key OUT', size=32, required_if_provider='vpos', groups='base.group_user')
-    ogone_alias_usage = fields.Char('Alias Usage', default="Allow saving my payment data",
-                                    help="If you want to use Ogone Aliases, this default "
-                                    "Alias Usage will be presented to the customer as the "
-                                    "reason you want to keep his payment data")
+    provider = fields.Selection(
+        selection_add=[
+            ('vpos', 'vPOS')],
+        ondelete={'vpos': 'set default'}
+    )
+    vpos_public_key = fields.Char(
+        string="vPOS Public Key",
+        required_if_provider='vpos',
+        groups='base.group_user'
+    )
+    vpos_private_key = fields.Char(
+        string="vPOS Private Key",
+        required_if_provider='vpos',
+        groups='base.group_user'
+    )
+
+    # ogone_pspid = fields.Char(
+    #     'PSPID', required_if_provider='vpos',
+    #     groups='base.group_user'
+    # )
+    # ogone_userid = fields.Char(
+    #     'API User ID',
+    #     required_if_provider='vpos',
+    #     groups='base.group_user'
+    # )
+    # ogone_password = fields.Char(
+    #     'API User Password',
+    #     required_if_provider='vpos',
+    #     groups='base.group_user'
+    # )
+    # ogone_shakey_in = fields.Char(
+    #     'SHA Key IN',
+    #     size=32,
+    #     required_if_provider='vpos',
+    #     groups='base.group_user'
+    # )
+    # ogone_shakey_out = fields.Char(
+    #     'SHA Key OUT',
+    #     size=32,
+    #     required_if_provider='vpos',
+    #     groups='base.group_user'
+    # )
+    # ogone_alias_usage = fields.Char(
+    #     'Alias Usage',
+    #     default="Allow saving my payment data",
+    #     help="If you want to use Ogone Aliases, this default Alias Usage will be "
+    #          "presented to the customer as the reason you want to keep his payment "
+    #          "data")
 
     def _get_feature_support(self):
         """Get advanced feature support by provider.
