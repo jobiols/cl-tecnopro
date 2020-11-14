@@ -5,7 +5,7 @@ import time
 
 from odoo.addons.payment.models.payment_acquirer import ValidationError
 from odoo.addons.payment.tests.common import PaymentAcquirerCommon
-from odoo.addons.payment_ingenico.controllers.main import OgoneController
+from odoo.addons.payment_vpos.controllers.main import vPOSController
 from werkzeug import urls
 
 from odoo.tools import mute_logger
@@ -13,23 +13,23 @@ from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install', 'external', '-standard')
-class OgonePayment(PaymentAcquirerCommon):
+class vPOSPayment(PaymentAcquirerCommon):
 
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
 
-        cls.vpos = cls.env.ref('payment.payment_acquirer_ogone')
+        cls.vpos = cls.env.ref('payment.payment_acquirer_vpos')
         cls.vpos.write({
-            'ogone_pspid': 'dummy',
-            'ogone_userid': 'dummy',
-            'ogone_password': 'dummy',
-            'ogone_shakey_in': 'dummy',
-            'ogone_shakey_out': 'dummy',
+            'vpos_pspid': 'dummy',
+            'vpos_userid': 'dummy',
+            'vpos_password': 'dummy',
+            'vpos_shakey_in': 'dummy',
+            'vpos_shakey_out': 'dummy',
             'state': 'test',
         })
 
-    def test_10_ogone_form_render(self):
+    def test_10_vpos_form_render(self):
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         # be sure not to do stupid thing
         self.assertEqual(self.vpos.state, 'test', 'test without test environment')
@@ -52,10 +52,10 @@ class OgonePayment(PaymentAcquirerCommon):
             'OWNERTOWN': 'Sin City',
             'OWNERTELNO': '0032 12 34 56 78',
             'SHASIGN': '815f67b8ff70d234ffcf437c13a9fa7f807044cc',
-            'ACCEPTURL': urls.url_join(base_url, OgoneController._accept_url),
-            'DECLINEURL': urls.url_join(base_url, OgoneController._decline_url),
-            'EXCEPTIONURL': urls.url_join(base_url, OgoneController._exception_url),
-            'CANCELURL': urls.url_join(base_url, OgoneController._cancel_url),
+            'ACCEPTURL': urls.url_join(base_url, vPOSController._accept_url),
+            'DECLINEURL': urls.url_join(base_url, vPOSController._decline_url),
+            'EXCEPTIONURL': urls.url_join(base_url, vPOSController._exception_url),
+            'CANCELURL': urls.url_join(base_url, vPOSController._cancel_url),
         }
 
         # render the button
@@ -107,12 +107,12 @@ class OgonePayment(PaymentAcquirerCommon):
             )
 
     @mute_logger('odoo.addons.payment_ingenico.models.payment', 'ValidationError')
-    def test_20_ogone_form_management(self):
+    def test_20_vpos_form_management(self):
         # be sure not to do stupid thing
         self.assertEqual(self.vpos.state, 'test', 'test without test environment')
 
         # typical data posted by vpos after client has successfully paid
-        ogone_post_data = {
+        vpos_post_data = {
             'orderID': u'test_ref_2',
             'STATUS': u'9',
             'CARDNO': u'XXXXXXXXXXXX0002',
@@ -132,7 +132,7 @@ class OgonePayment(PaymentAcquirerCommon):
 
         # should raise error about unknown tx
         with self.assertRaises(ValidationError):
-            self.env['payment.transaction'].form_feedback(ogone_post_data)
+            self.env['payment.transaction'].form_feedback(vpos_post_data)
 
         # create tx
         tx = self.env['payment.transaction'].create({
@@ -143,10 +143,10 @@ class OgonePayment(PaymentAcquirerCommon):
             'partner_name': 'Norbert Buyer',
             'partner_country_id': self.country_france.id})
         # validate it
-        tx.form_feedback(ogone_post_data)
+        tx.form_feedback(vpos_post_data)
         # check state
         self.assertEqual(tx.state, 'done', 'vpos: validation did not put tx into done state')
-        self.assertEqual(tx.ogone_payid, ogone_post_data.get('PAYID'), 'vpos: validation did not update tx payid')
+        self.assertEqual(tx.vpos_payid, vpos_post_data.get('PAYID'), 'vpos: validation did not update tx payid')
 
         # reset tx
         tx = self.env['payment.transaction'].create({
@@ -158,18 +158,18 @@ class OgonePayment(PaymentAcquirerCommon):
             'partner_country_id': self.country_france.id})
 
         # now vpos post is ok: try to modify the SHASIGN
-        ogone_post_data['SHASIGN'] = 'a4c16bae286317b82edb49188d3399249a784691'
+        vpos_post_data['SHASIGN'] = 'a4c16bae286317b82edb49188d3399249a784691'
         with self.assertRaises(ValidationError):
-            tx.form_feedback(ogone_post_data)
+            tx.form_feedback(vpos_post_data)
 
         # simulate an error
-        ogone_post_data['STATUS'] = 2
-        ogone_post_data['SHASIGN'] = 'a4c16bae286317b82edb49188d3399249a784691'
-        tx.form_feedback(ogone_post_data)
+        vpos_post_data['STATUS'] = 2
+        vpos_post_data['SHASIGN'] = 'a4c16bae286317b82edb49188d3399249a784691'
+        tx.form_feedback(vpos_post_data)
         # check state
         self.assertEqual(tx.state, 'cancel', 'vpos: erroneous validation did not put tx into error state')
 
-    def test_30_ogone_s2s(self):
+    def test_30_vpos_s2s(self):
         test_ref = 'test_ref_%.15f' % time.time()
         # be sure not to do stupid thing
         self.assertEqual(self.vpos.state, 'test', 'test without test environment')
@@ -185,11 +185,11 @@ class OgonePayment(PaymentAcquirerCommon):
         })
 
         # create an alias
-        res = tx.ogone_s2s_create_alias({
+        res = tx.vpos_s2s_create_alias({
             'expiry_date_mm': '01',
             'expiry_date_yy': '2015',
             'holder_name': 'Norbert Poilu',
             'number': '4000000000000002',
             'brand': 'VISA'})
 
-        res = tx.ogone_s2s_execute({})
+        res = tx.vpos_s2s_execute({})

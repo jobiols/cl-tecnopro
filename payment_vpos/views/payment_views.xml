@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-
-        <record id="acquirer_form_ogone" model="ir.ui.view">
-            <field name="name">acquirer.form.vpos</field>
-            <field name="model">payment.acquirer</field>
-            <field name="inherit_id" ref="payment.acquirer_form"/>
-            <field name="arch" type="xml">
-                <xpath expr='//group[@name="acquirer"]' position='inside'>
-                    <group attrs="{'invisible': [('provider', '!=', 'vpos')]}">
-                        <field name="vpos_public_key" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
-                        <field name="vpos_private_key" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
-<!--
-                        <field name="ogone_password" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
-                        <field name="ogone_shakey_in" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
-                        <field name="ogone_shakey_out" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
-                        <field name="ogone_alias_usage"/>
--->                        
-                    </group>
-                </xpath>
-            </field>
-        </record>
-
-    </data>
+    <record id="acquirer_form_vpos" model="ir.ui.view">
+        <field name="name">acquirer.form.vpos</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.acquirer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="acquirer"]' position='inside'>
+                <group attrs="{'invisible': [('provider', '!=', 'vpos')]}">
+                    <field name="vpos_public_key" attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
+                    <field name="vpos_private_key" password="True"  attrs="{'required':[ ('provider', '=', 'vpos'), ('state', '!=', 'disabled')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
 </odoo>

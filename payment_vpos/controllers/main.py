@@ -12,7 +12,7 @@ from odoo.addons.payment.controllers.portal import PaymentProcessing
 _logger = logging.getLogger(__name__)
 
 
-class OgoneController(http.Controller):
+class vPOSController(http.Controller):
     _accept_url = '/payment/vpos/test/accept'
     _decline_url = '/payment/vpos/test/decline'
     _exception_url = '/payment/vpos/test/exception'
@@ -24,21 +24,21 @@ class OgoneController(http.Controller):
         '/payment/vpos/exception', '/payment/vpos/test/exception',
         '/payment/vpos/cancel', '/payment/vpos/test/cancel',
     ], type='http', auth='public', csrf=False, method=['GET', 'POST'])
-    def ogone_form_feedback(self, **post):
+    def vpos_form_feedback(self, **post):
         """ Handle both redirection from Ingenico (GET) and s2s notification (POST/GET) """
-        _logger.info('Ogone: entering form_feedback with post data %s', pprint.pformat(post))  # debug
+        _logger.info('vPOS: entering form_feedback with post data %s', pprint.pformat(post))  # debug
         request.env['payment.transaction'].sudo().form_feedback(post, 'vpos')
         return werkzeug.utils.redirect("/payment/process")
 
     @http.route(['/payment/vpos/s2s/create_json'], type='json', auth='public', csrf=False)
-    def ogone_s2s_create_json(self, **kwargs):
+    def vpos_s2s_create_json(self, **kwargs):
         if not kwargs.get('partner_id'):
             kwargs = dict(kwargs, partner_id=request.env.user.partner_id.id)
         new_id = request.env['payment.acquirer'].browse(int(kwargs.get('acquirer_id'))).s2s_process(kwargs)
         return new_id.id
 
     @http.route(['/payment/vpos/s2s/create_json_3ds'], type='json', auth='public', csrf=False)
-    def ogone_s2s_create_json_3ds(self, verify_validity=False, **kwargs):
+    def vpos_s2s_create_json_3ds(self, verify_validity=False, **kwargs):
         if not kwargs.get('partner_id'):
             kwargs = dict(kwargs, partner_id=request.env.user.partner_id.id)
         token = False
@@ -81,7 +81,7 @@ class OgoneController(http.Controller):
         return res
 
     @http.route(['/payment/vpos/s2s/create'], type='http', auth='public', methods=["POST"], csrf=False)
-    def ogone_s2s_create(self, **post):
+    def vpos_s2s_create(self, **post):
         error = ''
         acq = request.env['payment.acquirer'].browse(int(post.get('acquirer_id')))
         try:
@@ -111,7 +111,7 @@ class OgoneController(http.Controller):
         '/payment/vpos/validate/decline',
         '/payment/vpos/validate/exception',
     ], type='http', auth='public')
-    def ogone_validation_form_feedback(self, **post):
+    def vpos_validation_form_feedback(self, **post):
         """ Feedback from 3d secure for a bank card validation """
         request.env['payment.transaction'].sudo().form_feedback(post, 'vpos')
         return werkzeug.utils.redirect("/payment/process")
@@ -119,8 +119,8 @@ class OgoneController(http.Controller):
     @http.route(['/payment/vpos/s2s/feedback'], auth='public', csrf=False)
     def feedback(self, **kwargs):
         try:
-            tx = request.env['payment.transaction'].sudo()._ogone_form_get_tx_from_data(kwargs)
-            tx._ogone_s2s_validate_tree(kwargs)
+            tx = request.env['payment.transaction'].sudo()._vpos_form_get_tx_from_data(kwargs)
+            tx._vpos_s2s_validate_tree(kwargs)
         except ValidationError:
             return 'ko'
         return 'ok'

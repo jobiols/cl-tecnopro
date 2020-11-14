@@ -9,9 +9,9 @@
     'summary': 'Payment Acquirer: vPOS Implementation',
     'depends': ['payment'],
     'data': [
+        'views/payment_bancard_templates.xml',
         'data/payment_acquirer_data.xml',
         'views/payment_views.xml',
-        'views/payment_bancard_templates.xml',
     ],
     'installable': True,
     'application': True,

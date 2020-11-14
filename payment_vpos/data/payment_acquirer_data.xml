@@ -41,9 +41,7 @@
                 <p>Your payment has been cancelled.</p>
             </field>
             <field name="module_id" ref="base.module_payment_vpos"/>
-            <!--
-            <field name="view_template_id" ref="default_acquirer_button"/>
-        -->
+            <field name="view_template_id" ref="vpos_s2s_form"/>
         </record>
     </data>
 </odoo>
