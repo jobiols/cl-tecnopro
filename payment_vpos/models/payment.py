@@ -98,7 +98,7 @@ class PaymentAcquirerVPOS(models.Model):
         import wdb;wdb.set_trace()
 
         """ vPOS URLS:
-         - standard order: POST address for form-based """
+            - standard order: POST address for form-based """
         return {
             'vpos_standard_order_url': 'http://localhost:8008',
             'vpos_direct_order_url': 'http://localhost:8008',
@@ -116,97 +116,21 @@ class PaymentAcquirerVPOS(models.Model):
 
         :return string: shasign
         """
-        assert inout in ('in', 'out')
-        assert self.provider == 'vpos'
-        key = getattr(self, 'vpos_shakey_' + inout)
-
-        def filter_key(key):
-            if inout == 'in':
-                return True
-            else:
-                # SHA-OUT keys
-                # source https://payment-services.ingenico.com/int/en/vpos/support/guides/integration guides/e-commerce/transaction-feedback
-                keys = [
-                    'AAVADDRESS',
-                    'AAVCHECK',
-                    'AAVMAIL',
-                    'AAVNAME',
-                    'AAVPHONE',
-                    'AAVZIP',
-                    'ACCEPTANCE',
-                    'ALIAS',
-                    'AMOUNT',
-                    'BIC',
-                    'BIN',
-                    'BRAND',
-                    'CARDNO',
-                    'CCCTY',
-                    'CN',
-                    'COLLECTOR_BIC',
-                    'COLLECTOR_IBAN',
-                    'COMPLUS',
-                    'CREATION_STATUS',
-                    'CREDITDEBIT',
-                    'CURRENCY',
-                    'CVCCHECK',
-                    'DCC_COMMPERCENTAGE',
-                    'DCC_CONVAMOUNT',
-                    'DCC_CONVCCY',
-                    'DCC_EXCHRATE',
-                    'DCC_EXCHRATESOURCE',
-                    'DCC_EXCHRATETS',
-                    'DCC_INDICATOR',
-                    'DCC_MARGINPERCENTAGE',
-                    'DCC_VALIDHOURS',
-                    'DEVICEID',
-                    'DIGESTCARDNO',
-                    'ECI',
-                    'ED',
-                    'EMAIL',
-                    'ENCCARDNO',
-                    'FXAMOUNT',
-                    'FXCURRENCY',
-                    'IP',
-                    'IPCTY',
-                    'MANDATEID',
-                    'MOBILEMODE',
-                    'NBREMAILUSAGE',
-                    'NBRIPUSAGE',
-                    'NBRIPUSAGE_ALLTX',
-                    'NBRUSAGE',
-                    'NCERROR',
-                    'ORDERID',
-                    'PAYID',
-                    'PAYIDSUB',
-                    'PAYMENT_REFERENCE',
-                    'PM',
-                    'SCO_CATEGORY',
-                    'SCORING',
-                    'SEQUENCETYPE',
-                    'SIGNDATE',
-                    'STATUS',
-                    'SUBBRAND',
-                    'SUBSCRIPTION_ID',
-                    'TICKET',
-                    'TRXDATE',
-                    'VC',
-                ]
-                return key.upper() in keys
-
-        items = sorted((k.upper(), v) for k, v in values.items())
-        sign = ''.join('%s=%s%s' % (k, v, key) for k, v in items if v and filter_key(k))
-        sign = sign.encode("utf-8")
-        shasign = sha1(sign).hexdigest()
-        return shasign
+        return "21313123123"
 
     def vpos_form_generate_values(self, values):
+        """ Genera un pago llamando al iFrame de bancard
+        """
+
+        import wdb;wdb.set_trace()
+
         base_url = self.get_base_url()
         vpos_tx_values = dict(values)
         param_plus = {
             'return_url': vpos_tx_values.pop('return_url', False)
         }
         temp_vpos_tx_values = {
-            'PSPID': self.vpos_pspid,
+#            'PSPID': self.vpos_pspid,
             'ORDERID': values['reference'],
             'AMOUNT': float_repr(float_round(values['amount'], 2) * 100, 0),
             'CURRENCY': values['currency'] and values['currency'].name or '',
@@ -227,7 +151,7 @@ class PaymentAcquirerVPOS(models.Model):
         if self.save_token in ['ask', 'always']:
             temp_vpos_tx_values.update({
                 'ALIAS': 'ODOO-NEW-ALIAS-%s' % time.time(),    # something unique,
-                'ALIASUSAGE': values.get('alias_usage') or self.vpos_alias_usage,
+#                'ALIASUSAGE': values.get('alias_usage') or self.vpos_alias_usage,
             })
         shasign = self._vpos_generate_shasign('in', temp_vpos_tx_values)
         temp_vpos_tx_values['SHASIGN'] = shasign
@@ -392,6 +316,9 @@ class PaymentTxvPOS(models.Model):
     # --------------------------------------------------
     def vpos_s2s_do_transaction(self, **kwargs):
         # TODO: create tx with s2s type
+
+        import wdb;wdb.set_trace()
+
         account = self.acquirer_id
         reference = self.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%y%m%d_%H%M%S'), self.partner_id.id)
 
@@ -452,6 +379,9 @@ class PaymentTxvPOS(models.Model):
         return self._vpos_s2s_validate_tree(tree)
 
     def vpos_s2s_do_refund(self, **kwargs):
+
+        import wdb;wdb.set_trace()
+
         account = self.acquirer_id
         reference = self.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%y%m%d_%H%M%S'), self.partner_id.id)
 
@@ -549,6 +479,9 @@ class PaymentTxvPOS(models.Model):
             return False
 
     def _vpos_s2s_get_tx_status(self):
+
+        import wdb;wdb.set_trace()
+
         account = self.acquirer_id
         #reference = tx.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), tx.partner_id.id)
 
@@ -583,6 +516,12 @@ class PaymentToken(models.Model):
     _inherit = 'payment.token'
 
     def vpos_create(self, values):
+        """ Inicia el pago con tarjeta de credito muestra el formulario para cargar la
+            tarjeta
+        """
+
+        import wdb;wdb.set_trace()
+
         if values.get('cc_number'):
             # create a alias via batch
             values['cc_number'] = values['cc_number'].replace(' ', '')
@@ -594,15 +533,15 @@ class PaymentToken(models.Model):
             line = line % dict(values, alias=alias, expiry=expiry, pspid=acquirer.vpos_pspid)
 
             data = {
-                'FILE_REFERENCE': alias,
+                'public_key': self.vpos.public_key,
                 'TRANSACTION_CODE': 'MTR',
                 'OPERATION': 'SAL',
                 'NB_PAYMENTS': 1,   # even if we do not actually have any payment, vpos want it to not be 0
                 'FILE': normalize('NFKD', line).encode('ascii','ignore'),  # vpos Batch must be ASCII only
                 'REPLY_TYPE': 'XML',
-                'PSPID': acquirer.vpos_pspid,
-                'USERID': acquirer.vpos_userid,
-                'PSWD': acquirer.vpos_password,
+#                'PSPID': acquirer.vpos_pspid,
+#                'USERID': acquirer.vpos_userid,
+#                'PSWD': acquirer.vpos_password,
                 'PROCESS_MODE': 'CHECKANDPROCESS',
             }
 

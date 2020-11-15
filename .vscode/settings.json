@@ -1,3 +1,15 @@
 {
- 
+    "restructuredtext.confPath": "",
+    "sqltools.connections": [
+        {
+            "database": "tecnopro_prod",
+            "driver": "PostgreSQL",
+            "name": "tecnopro_prod",
+            "password": "odoo",
+            "port": 5432,
+            "previewLimit": 50,
+            "server": "localhost",
+            "username": "odoo"
+        }
+    ]
 }
