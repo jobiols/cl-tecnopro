@@ -95,7 +95,7 @@ class PaymentAcquirerVPOS(models.Model):
 
     def _get_vpos_urls(self, environment):
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         """ vPOS URLS:
             - standard order: POST address for form-based """
@@ -122,7 +122,7 @@ class PaymentAcquirerVPOS(models.Model):
         """ Genera un pago llamando al iFrame de bancard
         """
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         base_url = self.get_base_url()
         vpos_tx_values = dict(values)
@@ -317,7 +317,7 @@ class PaymentTxvPOS(models.Model):
     def vpos_s2s_do_transaction(self, **kwargs):
         # TODO: create tx with s2s type
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         account = self.acquirer_id
         reference = self.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%y%m%d_%H%M%S'), self.partner_id.id)
@@ -380,7 +380,7 @@ class PaymentTxvPOS(models.Model):
 
     def vpos_s2s_do_refund(self, **kwargs):
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         account = self.acquirer_id
         reference = self.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%y%m%d_%H%M%S'), self.partner_id.id)
@@ -480,7 +480,7 @@ class PaymentTxvPOS(models.Model):
 
     def _vpos_s2s_get_tx_status(self):
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         account = self.acquirer_id
         #reference = tx.reference or "ODOO-%s-%s" % (datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), tx.partner_id.id)
@@ -520,7 +520,7 @@ class PaymentToken(models.Model):
             tarjeta
         """
 
-        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
         if values.get('cc_number'):
             # create a alias via batch
@@ -537,7 +537,7 @@ class PaymentToken(models.Model):
                 'TRANSACTION_CODE': 'MTR',
                 'OPERATION': 'SAL',
                 'NB_PAYMENTS': 1,   # even if we do not actually have any payment, vpos want it to not be 0
-                'FILE': normalize('NFKD', line).encode('ascii','ignore'),  # vpos Batch must be ASCII only
+                'FILE': normalize('NFKD', line).encode('ascii', 'ignore'),  # vpos Batch must be ASCII only
                 'REPLY_TYPE': 'XML',
 #                'PSPID': acquirer.vpos_pspid,
 #                'USERID': acquirer.vpos_userid,
