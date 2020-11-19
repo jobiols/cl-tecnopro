@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Bancard vPOS Payment Acquirer',
+    'name': 'Bancard vPOS Payment Acquirer (ogone)',
     'category': 'Accounting/Payment Acquirers',
     'author': "Tecnopro",
     'website': 'https://tecnopro.com.py',
