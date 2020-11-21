@@ -15,15 +15,14 @@ class VPosController(http.Controller):
     @http.route('/payment/vpos/response', type='http', auth='public', csrf=False)
     def vpos_response(self, **post):
         """ vPOS."""
-
-        import wdb;wdb.set_trace()
-
         _logger.info('vPOS: entering form_feedback with post response data %s', pprint.pformat(post))
         if post:
             request.env['payment.transaction'].sudo().form_feedback(post, 'vpos')
         return werkzeug.utils.redirect('/payment/process')
 
     @http.route('/probando', type='http', auth='public', csrf=False)
-    def vpos_probando(self, **post):
-
-        return '<iframe src="https://vpos.infonet.com.py:8888/checkout/new?process_id=_0snjoZ6boL71I96LIVO" width="100%" height="400" style="border:none;"></iframe>'
+    def vpos_probando(self, **kw):
+        print(http.request.render('payment_vpos.vpos_iframe'))
+        return http.request.render('payment_vpos.vpos_iframe', {
+                "iframe_url": 'https://vpos.infonet.com.py:8888/checkout/new?process_id=_0snjoZ6boL71I96LIVO'
+            })

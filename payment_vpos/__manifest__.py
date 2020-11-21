@@ -7,7 +7,7 @@
     'website': 'https://tecnopro.com.py',
     'sequence': 375,
     'summary': 'Payment Acquirer: vPOS Implementation',
-    'depends': ['payment'],
+    'depends': ['payment', 'website'],
     'data': [
         'views/payment_vpos_templates.xml',
         'data/payment_acquirer_data.xml',

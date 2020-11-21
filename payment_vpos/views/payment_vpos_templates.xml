@@ -37,11 +37,18 @@
     </template>
 
     <template id="vpos_iframe">
+        <iframe t-att-src="iframe_url" width="100%" height="320" style="border:none;"></iframe>
+
+        <!-- 
+            no se porque no anda el layout
         <t t-call="website.layout">
-            <div class="container text-center">
-                <iframe src="https://vpos.infonet.com.py:8888/checkout/new?process_id=_0snjoZ6boL71I96LIVO" width="100%" height="320" style="border:none;"></iframe>
+            <div>
+                Hola aaa
+                <!- -
+                - ->
             </div>
         </t>
+    -->
     </template>
 
 </odoo>
