@@ -24,10 +24,42 @@ class VPosController(http.Controller):
         _logger.error('Error interno al procesar datos')
         return http.request.render('payment_vpos.vpos_error', {})
 
-    @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
         _logger.info('Respuesta de Bancard (ok o error)')
-        return http.request.render('payment_vpos.vpos_approved', {})
+
+        data = request.jsonrequest
+        data = {
+            "operation": {
+                "token": "123456789/*",
+                "shop_process_id": 46,
+                "response": "S",
+                "response_details": "Procesado satisfa",
+                "amount": "1500.00",
+                "currency": "PYG",
+                "authorization_number": "6468542",
+                "ticket_number": "65497684646",
+                "response_code": "00",
+                "response_description": "Transaccion aprobada",
+                "extended_response_description": "null",
+                "security_information": {
+                    "customer_ip": "201.45.45.111",
+                    "card_source": "L",
+                    "card_country": "PARAGUAY",
+                    "version": "0.3",
+                    "risk_index": 0
+                }
+            }
+        }
+
+        return http.request.redirect('/bancard/show_answer')
+
+    @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
+    def vpos_show_answer(self, **kw):
+
+        import wdb;wdb.set_trace()
+
+        return http.request.render('payment_vpos.vpos_approved', kw)
 
     @http.route('/bancard/cancelled', type='json', auth='public', methods=['POST'], csrf=False)
     def vpos_bancard_cancelled(self, **kw):
