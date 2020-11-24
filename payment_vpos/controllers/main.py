@@ -25,11 +25,11 @@ class VPosController(http.Controller):
         return http.request.render('payment_vpos.vpos_error', {})
 
     @http.route('/bancard/return_url', type='http', auth='public', csrf=False)
-    def vpos_bancard_error(self, **kw):
+    def vpos_bancard_return_url(self, **kw):
         _logger.info('Respuesta de Bancard (ok o error)')
         return http.request.render('payment_vpos.vpos_approved', {})
 
     @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
-    def vpos_bancard_error(self, **kw):
+    def vpos_bancard_cancelled(self, **kw):
         _logger.info('Respuesta de Bancard Cancelacion')
         return http.request.render('payment_vpos.vpos_cancelled', {})
