@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Bancard vPOS Payment Acquirer (limpio)',
+    'name': 'Bancard vPOS Payment Acquirer',
     'category': 'Accounting/Payment Acquirers',
     'author': "Tecnopro",
     'website': 'https://tecnopro.com.py',

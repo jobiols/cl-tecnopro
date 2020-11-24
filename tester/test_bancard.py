@@ -10,7 +10,7 @@ url = 'http://localhost:8008'
 env_staging = "https://vpos.infonet.com.py:8888"
 env_prod = "https://vpos.infonet.com.py"
 private_key = "FVwH3T1DQAz.k(DlnWBL+mtkmRxQF9EK,.YkaJXd"
-shop_process_id = "20"
+shop_process_id = "25"
 amount = "1000.00"
 currency = "PYG"
 
