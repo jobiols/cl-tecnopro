@@ -12,6 +12,7 @@
         'views/payment_vpos_templates.xml',
         'data/payment_acquirer_data.xml',
         'views/payment_views.xml',
+        'data/process_id_sequence.xml'
     ],
     'application': True,
     'installable': True,

@@ -18,6 +18,8 @@ _logger = logging.getLogger(__name__)
 class PaymentAcquirerVPos(models.Model):
     _inherit = 'payment.acquirer'
 
+    amount = fields.Float()
+
     provider = fields.Selection(
         selection_add=[('vpos', 'vPOS')],
         ondelete={'vpos': 'set default'}
@@ -33,17 +35,15 @@ class PaymentAcquirerVPos(models.Model):
         groups='base.group_user'
     )
 
-
     def _get_vpos_answ(self, environment):
         """ devuelve la respuesta de bancard"""
 
         env_staging = "https://vpos.infonet.com.py:8888"
-        env_prod = "https://vpos.infonet.com.py"
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
 
         private_key = self.vpos_private_key
-        shop_process_id = "16"
-        amount = "1000.00"
+        shop_process_id = self.env['ir.sequence'].next_by_code('process_id_sequence')
+        amount = '{0:.2f}'.format(self.amount)
         currency = "PYG"
 
         token = md5(private_key.encode('utf-8') +
@@ -70,19 +70,10 @@ class PaymentAcquirerVPos(models.Model):
 
 
     def vpos_form_generate_values(self, values):
-        """Metodo que genera los valores usados para renderizar la plantilla de boton
+        """ que le pasa el amount por variable global
         """
-        _logger.info('Generando values...........................')
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-
-        # armar aca lo que le voy a mandar a vpos y retornar la url
-
-        vpos_values = dict(
-            values,
-            public_key=self.vpos_public_key,
-            responseUrl=urls.url_join(base_url, '/payment/vpos/response')
-        )
-        return vpos_values
+        self.amount = values['amount']
+        return dict()
 
 
     def vpos_get_form_action_url(self):
