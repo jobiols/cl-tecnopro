@@ -25,7 +25,7 @@ data = {
         "amount": amount,
         "additional_data": "",
         "description": "Test desde python con token generado",
-        "return_url": "https://tecnopro.com.py/webhooks/bancard/approved",
+        "return_url": "https://tecnopro.com.py/webhooks/bancard/return_url",
         "cancel_url": "https://tecnopro.com.py/webhooks/bancard/cancelled"
     }
 }

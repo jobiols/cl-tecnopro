@@ -60,8 +60,8 @@ class PaymentAcquirerVPos(models.Model):
                 "currency": currency,
                 "amount": amount,
                 "additional_data": "",
-                "description": "Test desde python con token generado",
-                "return_url": "%s/bancard/approved" % base_url,
+                "description": "Testeando el pago desde odoo",
+                "return_url": "%s/bancard/return_url" % base_url,
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
