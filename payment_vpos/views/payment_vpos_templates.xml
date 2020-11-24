@@ -23,16 +23,17 @@
             <input type="hidden" name="rm" value="2"/>
             <input t-if='state' type="hidden" name="state"
                 t-att-value='state'/>
-            <!-- after payment parameters -->
+            <!-- after payment parameters 
             <input t-if='custom' type="hidden" name="custom"
                 t-att-value='custom'/>
-            <!-- URLs -->
+            <!- - URLs - ->
             <input t-if="paypal_return" type="hidden" name='return'
                 t-att-value="paypal_return"/>
             <input t-if="acquirer.paypal_use_ipn" type="hidden" name='notify_url'
                 t-att-value="notify_url"/>
             <input t-if="cancel_return" type="hidden" name="cancel_return"
                 t-att-value="cancel_return"/>
+                -->
     </div>
     </template>
 
