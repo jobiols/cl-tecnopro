@@ -1,1 +1,2 @@
-select name, view_template_id from payment_acquirer
+select payment_flow from payment_acquirer
+where id in (8,15)

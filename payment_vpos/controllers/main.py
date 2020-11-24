@@ -12,17 +12,12 @@ _logger = logging.getLogger(__name__)
 
 class VPosController(http.Controller):
 
-    @http.route('/payment/vpos/response', type='http', auth='public', csrf=False)
-    def vpos_response(self, **post):
-        """ vPOS."""
-        _logger.info('vPOS: entering form_feedback with post response data %s', pprint.pformat(post))
-        if post:
-            request.env['payment.transaction'].sudo().form_feedback(post, 'vpos')
-        return werkzeug.utils.redirect('/payment/process')
-
-    @http.route('/probando', type='http', auth='public', csrf=False)
-    def vpos_probando(self, **kw):
-        print(http.request.render('payment_vpos.vpos_iframe'))
+    @http.route('/bancard', type='http', auth='public', csrf=False)
+    def vpos_bancard(self, **kw):
         return http.request.render('payment_vpos.vpos_iframe', {
-                "iframe_url": 'https://vpos.infonet.com.py:8888/checkout/new?process_id=_0snjoZ6boL71I96LIVO'
+                "iframe_url": kw.get('url')
             })
+
+    @http.route('/bancard_error', type='http', auth='public', csrf=False)
+    def vpos_bancard_error(self, **kw):
+        return http.request.render('payment_vpos.vpos_error', {})

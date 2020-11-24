@@ -37,7 +37,7 @@
     </template>
 
     <template id="vpos_iframe">
-        <iframe t-att-src="iframe_url" width="100%" height="320" style="border:none;"></iframe>
+        <iframe t-att-src="iframe_url" width="100%" height="350" style="border:none;"></iframe>
 
         <!-- 
             no se porque no anda el layout
@@ -51,4 +51,9 @@
     -->
     </template>
 
+    <template id="vpos_error">
+        <div>
+            Su pago no pudo ser procesado.
+        </div>
+    </template>
 </odoo>

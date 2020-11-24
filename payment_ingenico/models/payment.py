@@ -54,9 +54,6 @@ class PaymentAcquirerOgone(models.Model):
         return res
 
     def _get_ogone_urls(self, environment):
-
-        import wdb;wdb.set_trace()
-        
         """ Ogone URLS:
          - standard order: POST address for form-based """
         return {
