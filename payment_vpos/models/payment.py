@@ -45,6 +45,7 @@ class PaymentAcquirerVPos(models.Model):
         shop_process_id = self.env['ir.sequence'].next_by_code('process_id_sequence')
         amount = '{0:.2f}'.format(self.amount)
         currency = "PYG"
+        _logger.info('Procesando pago id=%s' % shop_process_id)
 
         token = md5(private_key.encode('utf-8') +
                     shop_process_id.encode('utf-8') +
