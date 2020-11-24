@@ -61,8 +61,8 @@ class PaymentAcquirerVPos(models.Model):
                 "amount": amount,
                 "additional_data": "",
                 "description": "Test desde python con token generado",
-                "return_url": "%s/webhooks/bancard/approved" % base_url,
-                "cancel_url": "%s/webhooks/bancard/cancelled" % base_url
+                "return_url": "%s/bancard/approved" % base_url,
+                "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
 
@@ -95,5 +95,4 @@ class PaymentAcquirerVPos(models.Model):
             bancard_url = '%s/checkout/new?process_id=%s' % (env_staging, process_id)
             return '/bancard?url=%s' % bancard_url
         else:
-            return '/bancard_error'
-
+            return '/bancard/error'

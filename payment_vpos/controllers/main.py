@@ -18,6 +18,14 @@ class VPosController(http.Controller):
                 "iframe_url": kw.get('url')
             })
 
-    @http.route('/bancard_error', type='http', auth='public', csrf=False)
+    @http.route('/bancard/error', type='http', auth='public', csrf=False)
     def vpos_bancard_error(self, **kw):
         return http.request.render('payment_vpos.vpos_error', {})
+
+    @http.route('/bancard/approved', type='http', auth='public', csrf=False)
+    def vpos_bancard_error(self, **kw):
+        return http.request.render('payment_vpos.vpos_approved', {})
+
+    @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
+    def vpos_bancard_error(self, **kw):
+        return http.request.render('payment_vpos.vpos_cancelled', {})

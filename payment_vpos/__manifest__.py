@@ -2,11 +2,12 @@
 
 {
     'name': 'Bancard vPOS Payment Acquirer',
-    'version': '14.0.1.0.0',
+    'version': "14.0.1.0.0",
+    'license': 'AGPL-3',
     'category': 'Accounting/Payment Acquirers',
     'author': "Tecnopro",
     'website': 'https://tecnopro.com.py',
-    'sequence': 5,
+    'sequence': 375,
     'summary': 'Payment Acquirer: vPOS Implementation',
     'depends': ['payment', 'website'],
     'data': [

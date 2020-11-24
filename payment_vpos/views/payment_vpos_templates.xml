@@ -57,4 +57,15 @@
             Su pago no pudo ser procesado.
         </div>
     </template>
+    <template id="vpos_approved">
+        <div>
+            Su pago fue aprobado.
+        </div>
+    </template>
+    <template id="vpos_cancelled">
+        <div>
+            Su pago fue declinado.
+        </div>
+    </template>
+
 </odoo>
