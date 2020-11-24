@@ -65,17 +65,17 @@ class PaymentAcquirerVPos(models.Model):
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
+        _logger.info('RETURN URL %s', data['return_url'])
+        _logger.info('CANCEL URL %s', data['cancel_url'])
 
         answ = requests.post(url="%s/vpos/api/0.3/single_buy" % env_staging, json=data)
         return answ
-
 
     def vpos_form_generate_values(self, values):
         """ que le pasa el amount por variable global
         """
         self.amount = values['amount']
         return dict()
-
 
     def vpos_get_form_action_url(self):
         """ ############################################################################
