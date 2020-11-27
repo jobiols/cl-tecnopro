@@ -51,14 +51,12 @@ class VPosController(http.Controller):
                 }
             }
         }
-
-        return http.request.redirect('/bancard/show_answer')
+        ans = http.request.redirect('/bancard/show_answer')
+        _logger.info('Redirected response')
 
     @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
     def vpos_show_answer(self, **kw):
-
-        import wdb;wdb.set_trace()
-
+        _logger.info('answer response', str(kw))
         return http.request.render('payment_vpos.vpos_approved', kw)
 
     @http.route('/bancard/cancelled', type='json', auth='public', methods=['POST'], csrf=False)
