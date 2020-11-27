@@ -61,11 +61,11 @@ class PaymentAcquirerVPos(models.Model):
                 "amount": amount,
                 "additional_data": "",
                 "description": "Testeando el pago desde odoo",
-                "return_url": "%s/bancard/return_url" % base_url,
+                "return_url": "%s/bancard/error" % base_url,
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
-        _logger.info('RETURN URL %s', data['operation']['error'])
+        _logger.info('RETURN URL %s', data['operation']['return_url'])
         _logger.info('CANCEL URL %s', data['operation']['cancel_url'])
 
         answ = requests.post(url="%s/vpos/api/0.3/single_buy" % env_staging, json=data)
