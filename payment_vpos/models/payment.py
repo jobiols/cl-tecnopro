@@ -65,7 +65,7 @@ class PaymentAcquirerVPos(models.Model):
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
-        _logger.info('RETURN URL %s', data['operation']['return_url'])
+        _logger.info('RETURN URL %s', data['operation']['error'])
         _logger.info('CANCEL URL %s', data['operation']['cancel_url'])
 
         answ = requests.post(url="%s/vpos/api/0.3/single_buy" % env_staging, json=data)
