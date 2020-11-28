@@ -24,7 +24,8 @@ class VPosController(http.Controller):
         _logger.error('Error interno al procesar datos')
         return http.request.render('payment_vpos.vpos_error', {})
 
-    @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
+#   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
+    @http.route('/bancard/return_url', type='http', auth='public', methods=['POST'], csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
         _logger.info('Respuesta de Bancard (ok o error)')
 
