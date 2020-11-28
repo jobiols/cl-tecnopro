@@ -51,8 +51,8 @@ class VPosController(http.Controller):
                 }
             }
         }
-        ans = http.request.redirect('/bancard/show_answer')
-        _logger.info('Redirected response')
+        #ans = http.request.redirect('/bancard/show_answer')
+        #_logger.info('Redirected response')
 
         acquirer = request.env['payment.acquirer'].browse(14)
         return acquirer.sudo().render('/bancard/show_answer')
