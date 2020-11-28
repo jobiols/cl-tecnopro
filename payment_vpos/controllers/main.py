@@ -3,6 +3,7 @@
 import logging
 import pprint
 import werkzeug
+import pprint
 
 from odoo import http
 from odoo.http import request
@@ -27,9 +28,11 @@ class VPosController(http.Controller):
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
     @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
-        _logger.info('Respuesta de Bancard (ok o error)')
+        _logger.info('-----------------------------------------------------------------')
 
         data = request.jsonrequest
+        _logger.info('Respuesta de Bancard (ok o error), %s',  pprint.pformat(data))
+
         data = {
             "operation": {
                 "token": "123456789/*",
