@@ -31,30 +31,31 @@ class VPosController(http.Controller):
         _logger.info('-----------------------------------------------------------------')
 
         data = request.jsonrequest
-        _logger.info('Respuesta de Bancard (ok o error), %s',  pprint.pformat(data))
+        _logger.info('Respuesta de Bancard (ok o error), \n%s',  pprint.pformat(data))
 
         data = {
-            "operation": {
-                "token": "123456789/*",
-                "shop_process_id": 46,
-                "response": "S",
-                "response_details": "Procesado satisfa",
-                "amount": "1500.00",
-                "currency": "PYG",
-                "authorization_number": "6468542",
-                "ticket_number": "65497684646",
-                "response_code": "00",
-                "response_description": "Transaccion aprobada",
-                "extended_response_description": "null",
-                "security_information": {
-                    "customer_ip": "201.45.45.111",
-                    "card_source": "L",
-                    "card_country": "PARAGUAY",
-                    "version": "0.3",
-                    "risk_index": 0
-                }
+            'operation': {
+                'amount': '1500.00',
+                'authorization_number': '685611',
+                'currency': 'PYG',
+                'extended_response_description': None,
+                'response': 'S',
+                'response_code': '00',
+                'response_description': 'Transaccion aprobada',
+                'response_details': 'Procesado Satisfactoriamente',
+                'shop_process_id': 127,
+                'ticket_number': '2117924421',
+                'token': '8623fe675b5b6d2918841c0fb5620aa7',
+                'security_information': {
+                    'card_country': 'PARAGUAY',
+                    'card_source': 'L',
+                    'customer_ip': '201.231.201.230',
+                    'risk_index': 0,
+                    'version': '0.3'
+                },
             }
         }
+        return {'oki':True}
         #ans = http.request.redirect('/bancard/show_answer')
         #_logger.info('Redirected response')
 
