@@ -55,7 +55,7 @@ class VPosController(http.Controller):
                 },
             }
         }
-        return {'oki':True}
+        return 
         #ans = http.request.redirect('/bancard/show_answer')
         #_logger.info('Redirected response')
 
