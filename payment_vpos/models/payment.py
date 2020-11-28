@@ -6,7 +6,7 @@ import uuid
 from hashlib import md5
 from werkzeug import urls, utils
 import requests
-
+import pprint
 from odoo import api, fields, models, _
 from odoo.addons.payment.models.payment_acquirer import ValidationError
 from odoo.tools.float_utils import float_compare
@@ -61,12 +61,12 @@ class PaymentAcquirerVPos(models.Model):
                 "amount": amount,
                 "additional_data": "",
                 "description": "Testeando el pago desde odoo",
-                "return_url": "%s/bancard/error" % base_url,
+                "return_url": "%s/bancard/return_url" % base_url,
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
-        _logger.info('RETURN URL %s', data['operation']['return_url'])
-        _logger.info('CANCEL URL %s', data['operation']['cancel_url'])
+
+        _logger.info('Data sent to bancard \n%s', pprint.pformat(data))
 
         answ = requests.post(url="%s/vpos/api/0.3/single_buy" % env_staging, json=data)
         return answ

@@ -54,6 +54,9 @@ class VPosController(http.Controller):
         ans = http.request.redirect('/bancard/show_answer')
         _logger.info('Redirected response')
 
+        acquirer = request.env['payment.acquirer'].browse(14)
+        return acquirer.sudo().render('/bancard/show_answer')
+
     @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
     def vpos_show_answer(self, **kw):
         _logger.info('answer response', str(kw))
