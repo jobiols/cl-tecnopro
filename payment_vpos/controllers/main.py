@@ -34,8 +34,12 @@ class VPosController(http.Controller):
         data = request.jsonrequest
         _logger.info('Respuesta de Bancard (ok o error), \n%s',  pprint.pformat(data))
 
-        ans = http.request.render('payment_vpos.show_answer', {})
-        _logger.info('Redirected response %s', ans.response)
+
+        # esto da este error 'JsonRequest' object has no attribute 'render'
+        #ans = http.request.render('payment_vpos.show_answer', {})
+        #_logger.info('Redirected response %s', ans.response)
+        werkzeug.request.render('payment_vpos.show_answer', {})
+
 
         #acquirer = request.env['payment.acquirer'].browse(14)
 
