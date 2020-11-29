@@ -36,7 +36,7 @@ class PaymentAcquirerVPos(models.Model):
     )
 
     def _get_vpos_answ(self, environment):
-        """ devuelve la respuesta de bancard"""
+        """ devuelve la data para enviar a bancard """
 
         env_staging = "https://vpos.infonet.com.py:8888"
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
