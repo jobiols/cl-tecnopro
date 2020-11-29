@@ -34,16 +34,16 @@ class VPosController(http.Controller):
         data = request.jsonrequest
         _logger.info('Respuesta de Bancard (ok o error), \n%s',  pprint.pformat(data))
 
-        #ans = http.request.redirect('/bancard/show_answer')
-        #_logger.info('Redirected response %s', ans.response)
+        ans = http.request.redirect('/bancard/show_answer' data)
+        _logger.info('Redirected response %s', ans.response)
 
-        acquirer = request.env['payment.acquirer'].browse(14)
+        #acquirer = request.env['payment.acquirer'].browse(14)
 
-        reference = '/bancard/show_answer'
-        amount = float(data['operation']['amount'])
-        currency_id = False
-        values = data
-        acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
+        #reference = '/bancard/show_answer'
+        #amount = float(data['operation']['amount'])
+        #currency_id = False
+        #values = data
+        #acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
 
         return
 
