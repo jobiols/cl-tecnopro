@@ -52,6 +52,12 @@
     -->
     </template>
 
+    <template id="show_answer">
+        <div>
+            <p>Esta es la respuesta, faltan los datos</p>
+        </div>
+    </template>
+
     <template id="vpos_error">
         <div>
             Su pago no pudo ser procesado.
