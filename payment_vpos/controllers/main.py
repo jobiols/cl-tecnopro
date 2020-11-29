@@ -40,7 +40,7 @@ class VPosController(http.Controller):
         acquirer = request.env['payment.acquirer'].browse(14)
 
         reference = '/bancard/show_answer'
-        amount = data['operation']['amount']
+        amount = float(data['operation']['amount'])
         currency_id = False
         values = data
         acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
