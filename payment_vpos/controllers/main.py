@@ -50,8 +50,11 @@ class VPosController(http.Controller):
         #acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
 
         # el objeto ir.ui.view no tiene render_template
+
+
+
         template = request.env.ref('payment_vpos.show_answer')
-        return request.env['ir.ui.view']._render(template, {})
+        return template._render({})
 
 
     @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
