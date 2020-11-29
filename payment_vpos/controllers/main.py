@@ -38,7 +38,7 @@ class VPosController(http.Controller):
         # esto da este error 'JsonRequest' object has no attribute 'render'
         #ans = http.request.render('payment_vpos.show_answer', {})
         #_logger.info('Redirected response %s', ans.response)
-        werkzeug.request.render('payment_vpos.show_answer', {})
+        #werkzeug.request.render('payment_vpos.show_answer', {})
 
 
         #acquirer = request.env['payment.acquirer'].browse(14)
@@ -49,7 +49,7 @@ class VPosController(http.Controller):
         #values = data
         #acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
 
-        return
+        return request.env['ir.ui.view'].render_template('payment_vpos.show_answer', {})
 
     @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
     def vpos_show_answer(self, **kw):
