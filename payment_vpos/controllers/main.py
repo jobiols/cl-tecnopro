@@ -38,7 +38,7 @@ class VPosController(http.Controller):
         #_logger.info('Redirected response %s', ans.response)
 
         acquirer = request.env['payment.acquirer'].browse(14)
-        return acquirer.sudo().render('/bancard/show_answer')
+        acquirer.sudo().render('/bancard/show_answer', {})
 
         return
 
