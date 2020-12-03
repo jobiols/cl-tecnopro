@@ -49,6 +49,7 @@ class VPosController(http.Controller):
         #acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
         # el objeto ir.ui.view no tiene render_template
 
+        _logger.info('Redireccionando a /bancard/show_answer')
         return request.redirect('/bancard/show_answer')
 
 #       esto no hace nada
@@ -60,7 +61,7 @@ class VPosController(http.Controller):
         _logger.info('answer response', str(kw))
         return http.request.render('payment_vpos.vpos_approved', kw)
 
-    @http.route('/bancard/cancelled', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/bancard/cancelled', type='http', auth='public', methods=['POST'], csrf=False)
     def vpos_bancard_cancelled(self, **kw):
         _logger.info('Respuesta de Bancard Cancelacion')
         return http.request.render('payment_vpos.vpos_cancelled', {})
