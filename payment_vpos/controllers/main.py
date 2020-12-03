@@ -50,7 +50,8 @@ class VPosController(http.Controller):
         # el objeto ir.ui.view no tiene render_template
 
         _logger.info('Redireccionando a /bancard/show_answer')
-        return request.redirect('/bancard/show_answer')
+        #return request.redirect('/bancard/show_answer')
+        return request.redirect('/bancard/error')
 
 #       esto no hace nada
 #        template = request.env.ref('payment_vpos.show_answer')
@@ -58,10 +59,17 @@ class VPosController(http.Controller):
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
-        _logger.info('answer response', str(kw))
+        _logger.info('answer response %s', str(kw))
         return http.request.render('payment_vpos.vpos_approved', kw)
 
     @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
     def vpos_bancard_cancelled(self, **kw):
         _logger.info('Respuesta de Bancard Cancelacion')
         return http.request.render('payment_vpos.vpos_cancelled', {})
+
+
+    # esta redireccion funciona testeando -> bancard/error
+    @http.route('/testeando', type='http', auth='public', website=True, csrf=False)
+    def vpos_testeando(self, **kw):
+        _logger.info('Testeando ********************')
+        return request.redirect('/bancard/error')
