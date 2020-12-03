@@ -49,10 +49,12 @@ class VPosController(http.Controller):
         #acquirer.sudo().render(reference, amount, currency_id, partner_id=False, values=None)
         # el objeto ir.ui.view no tiene render_template
 
-        _logger.info('Redireccionando a /bancard/show_answer')
         #return request.redirect('/bancard/show_answer') no hace nada....
-        # intento renderizar en lugar de redireccionar.
-        return request.render('payment_vpos.vpos_cancelled', {})
+        # intento renderizar en lugar de redireccionar. no anda
+        #return request.render('payment_vpos.vpos_cancelled', {})
+
+        # a ver esta respuesta loca...
+        return '/bancard/cancelled'
 
 #       esto no hace nada
 #        template = request.env.ref('payment_vpos.show_answer')
