@@ -31,9 +31,9 @@ class VPosController(http.Controller):
 
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
 # cambio type=json por http | Da una excepcion dice que tiene que ser tipo json
-    @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
+    @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
-        _logger.info('Recibiendo respuesta de Bancard -------------------------------')
+        _logger.info('Recibiendo respuesta de Bancard ------------------------------- ')
 
         # obtener los datos enviados por bancard despues de la transaccion
         data = request.jsonrequest
@@ -67,13 +67,15 @@ class VPosController(http.Controller):
         #ret = request.redirect('/bancard/show_answer', code=301)
         #_logger.info('Respuesta del redirect %s', str(ret))
         #return ret
-#       codigo copiado de google
+#       codigo copiado de google no anda.
+        # return {
+        #     'type': 'ir.actions.act_url',
+        #     'url': '/bancard/show_answer',
+        #     'target': 'self'
+        # }
 
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/bancard/show_answer',
-            'target': 'self'
-        }
+        # https://www.odoo.com/fr_FR/forum/aide-1/how-to-call-odoo-data-from-json-controller-175523
+        return request.env['ir.ui.view'].render_template('payment._vpos.show_answer', data)
 
 
     @http.route('/bancard/show_answer', auth='public', website=True)
