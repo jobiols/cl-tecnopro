@@ -64,7 +64,7 @@ class VPosController(http.Controller):
 #        template = request.env.ref('payment_vpos.show_answer')
 #        return template._render(data)
         # pongo el redirect pero con methods POST
-        ret = request.redirect('/bancard/show_answer')
+        ret = request.redirect('/bancard/show_answer', code=301)
         _logger.info('Respuesta del redirect %s', str(ret))
         return ret
 
