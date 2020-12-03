@@ -27,7 +27,7 @@ class VPosController(http.Controller):
 
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
 # cambio type=json por http | Da una excepcion dice que tiene que ser tipo json
-    @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
+    @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
         _logger.info('Recibiendo respuesta de Bancard -------------------------------')
 
@@ -60,8 +60,9 @@ class VPosController(http.Controller):
 #        template = request.env.ref('payment_vpos.show_answer')
 #        return template._render(data)
         # pongo el redirect pero con methods POST
-        return request.redirect('/bancard/show_answer')
-
+        ret = request.redirect('/bancard/show_answer')
+        _logger.info('Respuesta del redirect', ret)
+        return ret
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
