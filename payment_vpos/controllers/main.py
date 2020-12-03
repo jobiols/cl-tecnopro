@@ -26,7 +26,8 @@ class VPosController(http.Controller):
         return http.request.render('payment_vpos.vpos_error', {})
 
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
-    @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
+# cambio type=json por http
+    @http.route('/bancard/return_url', type='http', auth='public', csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
         _logger.info('Recibiendo respuesta de Bancard -------------------------------')
 
