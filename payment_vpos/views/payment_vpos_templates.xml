@@ -38,11 +38,13 @@
     </template>
 
     <template id="vpos_iframe">
+        <iframe t-att-src="iframe_url" width="100%" height="350" style="border:none;"></iframe>
+<!--
         <t t-call="website.layout">
             <div>
-                <iframe t-att-src="iframe_url" width="100%" height="350" style="border:none;"></iframe>
             </div>
         </t>
+    -->
     </template>
 
     <template id="show_answer">
