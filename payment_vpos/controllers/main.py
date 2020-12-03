@@ -61,7 +61,7 @@ class VPosController(http.Controller):
         _logger.info('answer response', str(kw))
         return http.request.render('payment_vpos.vpos_approved', kw)
 
-    @http.route('/bancard/cancelled', type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
     def vpos_bancard_cancelled(self, **kw):
         _logger.info('Respuesta de Bancard Cancelacion')
         return http.request.render('payment_vpos.vpos_cancelled', {})
