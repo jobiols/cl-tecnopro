@@ -61,7 +61,7 @@ class VPosController(http.Controller):
 #        return template._render(data)
         # pongo el redirect pero con methods POST
         ret = request.redirect('/bancard/show_answer')
-        _logger.info('Respuesta del redirect', ret)
+        _logger.info('Respuesta del redirect %s', str(ret))
         return ret
 
     @http.route('/bancard/show_answer', auth='public', website=True)
