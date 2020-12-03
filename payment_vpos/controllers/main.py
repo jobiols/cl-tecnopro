@@ -26,8 +26,8 @@ class VPosController(http.Controller):
         return http.request.render('payment_vpos.vpos_error', {})
 
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
-# cambio type=json por http
-    @http.route('/bancard/return_url', type='http', auth='public', csrf=False, website=True)
+# cambio type=json por http | Da una excepcion dice que tiene que ser tipo json
+    @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
         _logger.info('Recibiendo respuesta de Bancard -------------------------------')
 
@@ -40,7 +40,6 @@ class VPosController(http.Controller):
         #_logger.info('Redirected response %s', ans.response)
         #werkzeug.request.render('payment_vpos.show_answer', {})
 
-
         #acquirer = request.env['payment.acquirer'].browse(14)
 
         #reference = '/bancard/show_answer'
@@ -51,8 +50,9 @@ class VPosController(http.Controller):
         # el objeto ir.ui.view no tiene render_template
 
         _logger.info('Redireccionando a /bancard/show_answer')
-        #return request.redirect('/bancard/show_answer')
-        return request.redirect('/bancard/error')
+        #return request.redirect('/bancard/show_answer') no hace nada....
+        # intento renderizar en lugar de redireccionar.
+        return request.render('payment_vpos.vpos_cancelled', {})
 
 #       esto no hace nada
 #        template = request.env.ref('payment_vpos.show_answer')
