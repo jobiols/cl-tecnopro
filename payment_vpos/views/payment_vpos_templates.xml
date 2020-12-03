@@ -38,18 +38,11 @@
     </template>
 
     <template id="vpos_iframe">
-        <iframe t-att-src="iframe_url" width="100%" height="350" style="border:none;"></iframe>
-
-        <!-- 
-            no se porque no anda el layout
         <t t-call="website.layout">
             <div>
-                Hola aaa
-                <!- -
-                - ->
+                <iframe t-att-src="iframe_url" width="100%" height="350" style="border:none;"></iframe>
             </div>
         </t>
-    -->
     </template>
 
     <template id="show_answer">
