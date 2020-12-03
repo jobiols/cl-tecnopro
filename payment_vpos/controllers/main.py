@@ -56,7 +56,7 @@ class VPosController(http.Controller):
 #        template = request.env.ref('payment_vpos.show_answer')
 #        return template._render(data)
 
-    @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
+    @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
         _logger.info('answer response', str(kw))
         return http.request.render('payment_vpos.vpos_approved', kw)
