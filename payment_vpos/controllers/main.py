@@ -16,9 +16,12 @@ class VPosController(http.Controller):
     @http.route('/bancard', type='http', auth='public', csrf=False)
     def vpos_bancard(self, **kw):
         _logger.info('Enviando peticion a bancard')
-        return http.request.render('payment_vpos.vpos_iframe', {
-                "iframe_url": kw.get('url')
-            })
+
+        # le cambio el render por un redirect.
+        # return http.request.render('payment_vpos.vpos_iframe', {
+        #         "iframe_url": kw.get('url')
+        #     })
+        return http.request.redirect(kw.get('url'))
 
     @http.route('/bancard/error', type='http', auth='public', csrf=False)
     def vpos_bancard_error(self, **kw):
