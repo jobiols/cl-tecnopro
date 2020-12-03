@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 class VPosController(http.Controller):
 
-    @http.route('/bancard', type='http', auth='public', csrf=False)
+    @http.route('/bancard', type='http', auth='public', csrf=False, website=True)
     def vpos_bancard(self, **kw):
         _logger.info('Enviando peticion a bancard')
 
@@ -21,6 +21,7 @@ class VPosController(http.Controller):
         # return http.request.render('payment_vpos.vpos_iframe', {
         #         "iframe_url": kw.get('url')
         #     })
+        # dice que no tiene redirect, le agrego website=true
         return http.request.redirect(kw.get('url'))
 
     @http.route('/bancard/error', type='http', auth='public', csrf=False)
