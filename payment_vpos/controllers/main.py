@@ -28,12 +28,11 @@ class VPosController(http.Controller):
 #   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
     @http.route('/bancard/return_url', type='json', auth='public', csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
-        _logger.info('-----------------------------------------------------------------')
+        _logger.info('Recibiendo respuesta de Bancard -------------------------------')
 
         # obtener los datos enviados por bancard despues de la transaccion
         data = request.jsonrequest
-        _logger.info('Respuesta de Bancard (ok o error), \n%s',  pprint.pformat(data))
-
+        _logger.info('\n%s',  pprint.pformat(data))
 
         # esto da este error 'JsonRequest' object has no attribute 'render'
         #ans = http.request.render('payment_vpos.show_answer', {})
@@ -51,10 +50,8 @@ class VPosController(http.Controller):
 
         # el objeto ir.ui.view no tiene render_template
 
-
-
         template = request.env.ref('payment_vpos.show_answer')
-        return template._render({})
+        return template._render(data)
 
 
     @http.route('/bancard/show_answer', type='http', auth='public', csrf=False)
