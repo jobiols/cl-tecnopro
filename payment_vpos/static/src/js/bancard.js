@@ -1,4 +1,4 @@
-​​odoo.define('bancard.snippet', function (require) {
+​​odoo.define('payment_vpos.bancard', function (require) {
     'use strict';
 
     var core = require('web.core');

@@ -49,7 +49,7 @@
 
     <template id="show_answer">
         <div>
-            <p>Esta es la respuesta, cantidad facturada <t t-esc="operation.amount"/> </p>
+            <p>Esta es la respuesta, cantidad facturada <t t-esc="bancard_data.operation.amount"/> </p>
         </div>
     </template>
 
@@ -69,6 +69,7 @@
         </div>
     </template>
 
+    <!-- registrar el javascript -->
     <template id="assets_frontend" inherit_id="web.assets_frontend">
         <xpath expr="script[last()]" position="after">
             <script type="text/javascript" src="/payment_vpos/static/src/js/bancard.js"></script>
