@@ -49,7 +49,7 @@
 
     <template id="show_answer">
         <div>
-            <p>Esta es la respuesta, faltan los datos</p>
+            <p>Esta es la respuesta, cantidad facturada <t t-esc="operation.amount"/> </p>
         </div>
     </template>
 
@@ -67,6 +67,12 @@
         <div>
             Su pago fue declinado.
         </div>
+    </template>
+
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/payment_vpos/static/src/js/bancard.js"></script>
+        </xpath>
     </template>
 
 </odoo>
