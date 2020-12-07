@@ -76,9 +76,11 @@ class VPosController(http.Controller):
 
         # https://www.odoo.com/fr_FR/forum/aide-1/how-to-call-odoo-data-from-json-controller-175523
         # return request.env['ir.ui.view']._render_template('payment_vpos.show_answer', data)
-        request.env['payment.transaction'].sudo().form_feedback(
-            data, 'vpos')
-        return werkzeug.utils.redirect("/bancard/show_answer")
+
+        # request.env['payment.transaction'].sudo().form_feedback(
+        #     data, 'vpos')
+        # return werkzeug.utils.redirect("/bancard/show_answer")
+        return request.website._render('payment_vpos.show_answer', data)
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
