@@ -80,7 +80,7 @@ class VPosController(http.Controller):
         # request.env['payment.transaction'].sudo().form_feedback(
         #     data, 'vpos')
         # return werkzeug.utils.redirect("/bancard/show_answer")
-        return request.website._render('payment_vpos.show_answer', data)
+        return request._render('payment_vpos.show_answer', data)
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
