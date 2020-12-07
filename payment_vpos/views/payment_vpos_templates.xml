@@ -23,7 +23,7 @@
             <input type="hidden" name="rm" value="2"/>
             <input t-if='state' type="hidden" name="state"
                 t-att-value='state'/>
-            <!-- after payment parameters 
+            <!-- after payment parameters
             <input t-if='custom' type="hidden" name="custom"
                 t-att-value='custom'/>
             <!- - URLs - ->
@@ -70,10 +70,10 @@
     </template>
 
     <!-- registrar el javascript -->
-    <template id="assets_frontend" inherit_id="web.assets_frontend">
+    <!-- <template id="assets_frontend" inherit_id="web.assets_frontend">
         <xpath expr="script[last()]" position="after">
             <script type="text/javascript" src="/payment_vpos/static/src/js/bancard.js"></script>
         </xpath>
-    </template>
+    </template> -->
 
 </odoo>
