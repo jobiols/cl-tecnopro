@@ -6,7 +6,7 @@ import werkzeug
 import pprint
 
 from odoo import http
-from odoo.http import request
+from odoo.http import request, Response
 
 _logger = logging.getLogger(__name__)
 
@@ -84,7 +84,7 @@ class VPosController(http.Controller):
         # return request._render('payment_vpos.show_answer', data)
         # return http.request.env['ir.ui.view'].render_template("payment_vpos.show_answer", {'data': data})
         headers=[('Content-Type', 'text/html; charset=utf-8')]
-        response = response(headers=headers)
+        response = Response(headers=headers)
         response.set_default('payment_vpos.show_answer')
         return response.render({'data': data})
 
