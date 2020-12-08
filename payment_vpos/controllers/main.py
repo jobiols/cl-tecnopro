@@ -85,8 +85,8 @@ class VPosController(http.Controller):
         # return http.request.env['ir.ui.view'].render_template("payment_vpos.show_answer", {'data': data})
         headers=[('Content-Type', 'text/html; charset=utf-8')]
         response = Response(headers=headers)
-        response.set_default('payment_vpos.show_answer')
-        return response.render({'data': data})
+        response.set_default('payment_vpos.show_answer', {'data': data})
+        return response.render()
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
