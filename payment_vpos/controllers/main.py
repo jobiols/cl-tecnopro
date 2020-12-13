@@ -4,6 +4,7 @@ import logging
 import pprint
 import werkzeug
 import pprint
+import urlparse
 
 from odoo import http
 from odoo.http import request, Response
