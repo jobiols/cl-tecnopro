@@ -9,10 +9,10 @@
 
     sAnimation.registry.js_send_json_request = sAnimation.Class.extend({
     function (require) {
-        ajax.jsonRpc("/bancard/show_answer", 'call', {}).done(function() {
+        ajax.jsonRpc("/bancard/return_url", 'call', {}).done(function() {
         }).then(function (json_data) {
             self.DataView.$el.append(QWeb.render('payment_vpos.show_answer',
-            {'product_details': json_data}))
+            {'data': json_data}))
             // $("#ViewCartModal").modal(); // Display modal
             return ;
             })

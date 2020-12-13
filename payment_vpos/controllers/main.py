@@ -85,13 +85,15 @@ class VPosController(http.Controller):
         # return http.request.env['ir.ui.view'].render_template("payment_vpos.show_answer", {'data': data})
         headers=[('Content-Type', 'text/html; charset=utf-8')]
         response = Response(headers=headers)
-        response.set_default('payment_vpos.show_answer', {'data': data})
-        return response.render()
+        # response.set_default('payment_vpos.show_answer', {'data': data})
+        # return response.render()
+        return self.vpos_show_answer()
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
         _logger.info('answer response %s', str(kw))
-        return http.request.render('payment_vpos.vpos_approved', kw)
+        # return http.request.render('payment_vpos.vpos_approved', kw)
+        return http.request.env['ir.ui.view']._render_template('payment_vpos.vpos_approved', kw)
 
     @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
     def vpos_bancard_cancelled(self, **kw):
