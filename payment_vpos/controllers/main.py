@@ -4,7 +4,6 @@ import logging
 import pprint
 import werkzeug
 import pprint
-import urlparse
 
 from odoo import http
 from odoo.http import request, Response
@@ -89,8 +88,7 @@ class VPosController(http.Controller):
         # response.set_default('payment_vpos.show_answer', {'data': data})
         # return response.render()
         # return self.vpos_show_answer()
-        base_url = request.httprequest.host_url
-        return_url = '%s' % urlparse.urljoin(base_url, '/bancard/show_answer')
+        return_url = 'https://tienda.tecnopro.com.py/bancard/show_answer'
         reply_values = '''Status=OK
         RedirectURL=%s
         StatusDetail=0000 : The Authorisation was Successful.''' % return_url
