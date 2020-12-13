@@ -87,7 +87,13 @@ class VPosController(http.Controller):
         response = Response(headers=headers)
         # response.set_default('payment_vpos.show_answer', {'data': data})
         # return response.render()
-        return self.vpos_show_answer()
+        # return self.vpos_show_answer()
+        base_url = request.httprequest.host_url
+        return_url = '%s' % urlparse.urljoin(base_url, '/bancard/show_answer')
+        reply_values = '''Status=OK
+        RedirectURL=%s
+        StatusDetail=0000 : The Authorisation was Successful.''' % return_url
+        return reply_values
 
     @http.route('/bancard/show_answer', auth='public', website=True)
     def vpos_show_answer(self, **kw):
