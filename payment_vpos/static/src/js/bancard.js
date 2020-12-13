@@ -11,11 +11,11 @@
     function (require) {
         ajax.jsonRpc("/bancard/return_url", 'call', {}).done(function() {
         }).then(function (json_data) {
-            self.DataView.$el.append(QWeb.render('payment_vpos.show_answer',
-            {'data': json_data}))
+            self.view.$el.append(QWeb.render('payment_vpos.show_answer',
+            {'data': json_data}));
             // $("#ViewCartModal").modal(); // Display modal
             return ;
             })
-        }
+        }//
     })
 })
