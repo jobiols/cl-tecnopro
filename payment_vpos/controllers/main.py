@@ -4,6 +4,7 @@ import logging
 import pprint
 import werkzeug
 import pprint
+import requests
 
 from odoo import http
 from odoo.http import request, Response
@@ -83,22 +84,31 @@ class VPosController(http.Controller):
 
         # return request._render('payment_vpos.show_answer', data)
         # return http.request.env['ir.ui.view'].render_template("payment_vpos.show_answer", {'data': data})
-        headers=[('Content-Type', 'text/html; charset=utf-8')]
-        response = Response(headers=headers)
+        headers={'Content-Type': 'text/html; charset=utf-8'}
+        _logger.info('post....')
+        # return {'status': 'success'}
+        requests.post(headers=headers,url='https://tienda.tecnopro.com.py/bancard/show_answer')
+        # response = Response(headers=headers)
         # response.set_default('payment_vpos.show_answer', {'data': data})
         # return response.render()
         # return self.vpos_show_answer()
-        return_url = 'https://tienda.tecnopro.com.py/bancard/show_answer'
-        reply_values = '''Status=OK
-        RedirectURL=%s
-        StatusDetail=0000 : The Authorisation was Successful.''' % return_url
-        return reply_values
+        # return_url = 'https://tienda.tecnopro.com.py/bancard/show_answer'
+        # reply_values = '''Status=200'''
+        # return reply_values
+        # return data
+        # return http.request.env.ref('payment_vpos.show_answer').render(data, engine='ir.qweb')
 
-    @http.route('/bancard/show_answer', auth='public', website=True)
+    @http.route('/bancard/show_answer', auth='public', website=True, csrf=False)
     def vpos_show_answer(self, **kw):
         _logger.info('answer response %s', str(kw))
-        # return http.request.render('payment_vpos.vpos_approved', kw)
-        return http.request.env['ir.ui.view']._render_template('payment_vpos.vpos_approved', kw)
+        return http.request.render('payment_vpos.vpos_approved', kw)
+        # return http.request.env['ir.ui.view']._render_template('payment_vpos.vpos_approved', kw)
+        # return werkzeug.utils.redirect("http://www.google.com.ar")
+
+    @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
+    def vpos_bancard_cancelled(self, **kw):
+        _logger.info('Respuesta de Bancard Cancelacion')
+        return http.request.render('payment_vpos.vpos_cancelled', {})
 
     @http.route('/bancard/cancelled', type='http', auth='public', csrf=False)
     def vpos_bancard_cancelled(self, **kw):
