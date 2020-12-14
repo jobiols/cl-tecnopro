@@ -61,7 +61,7 @@ class PaymentAcquirerVPos(models.Model):
                 "amount": amount,
                 "additional_data": "",
                 "description": "Testeando el pago desde odoo",
-                "return_url": "%s/bancard/return_url" % base_url,
+                "return_url": "%s/bancard/payment_confirm" % base_url,
                 "cancel_url": "%s/bancard/cancelled" % base_url
             }
         }
