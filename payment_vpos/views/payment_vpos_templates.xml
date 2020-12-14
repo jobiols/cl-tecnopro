@@ -68,6 +68,11 @@
             Su pago fue declinado.
         </div>
     </template>
+    <template id="vpos_confirm">
+        <div>
+            Su pago fue confirmado.
+        </div>
+    </template>
 
     <!-- registrar el javascript -->
     <!-- <template id="assets_frontend" inherit_id="web.assets_frontend">

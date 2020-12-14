@@ -30,7 +30,7 @@ class VPosController(http.Controller):
         _logger.error('Error interno al procesar datos')
         return http.request.render('payment_vpos.vpos_error', {})
 
-#   @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
+# @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
 # cambio type=json por http | Da una excepcion dice que tiene que ser tipo json
     @http.route('/bancard/return_url', type='json', auth='public', methods=['POST'], csrf=False, website=True)
     def vpos_bancard_return_url(self, **kw):
@@ -121,3 +121,9 @@ class VPosController(http.Controller):
     def vpos_testeando(self, **kw):
         _logger.info('Testeando ********************')
         return request.redirect('/bancard/error')
+
+
+    @http.route('/bancard/payment_confirm', type='http', auth='public', csrf=False)
+    def vpos_bancard_payment_confirm(self, **kw):
+        _logger.info('Confirmacion de pago Bancard, desde perfil de aplicacion')
+        return http.request.render('payment_vpos.vpos_confirm', {})
